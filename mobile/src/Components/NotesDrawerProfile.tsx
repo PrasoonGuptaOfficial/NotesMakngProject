@@ -1,23 +1,16 @@
 import React from 'react';
-import {Image, Pressable, StyleSheet} from 'react-native';
+import {Pressable} from 'react-native';
+import NotesImages from './NotesImages';
 
 const NotesDrawerProfile = (props: any): JSX.Element => {
   return (
     <Pressable onPress={props.onPress}>
-      <Image
-        source={require('../Gif/NotesProfile.gif')}
-        style={styles.profilePictureView}
+      <NotesImages
+        notesImageSource={require('../Assets/Gif/NotesProfile.gif')}
+        notesImageStyle={props.profilePictureStyle}
       />
     </Pressable>
   );
 };
-
-const styles = StyleSheet.create({
-  profilePictureView: {
-    width: 27,
-    height: 27,
-    marginLeft: 3,
-  },
-});
 
 export default NotesDrawerProfile;

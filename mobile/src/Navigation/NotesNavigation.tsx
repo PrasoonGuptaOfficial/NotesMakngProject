@@ -5,6 +5,8 @@ import {createDrawerNavigator} from '@react-navigation/drawer';
 import NotesDrawerProfile from '../Components/NotesDrawerProfile';
 import {NotesColors} from '../constants/Colors';
 import {NotesString} from '../constants/NotesString';
+import NotesCustomDrawer from './NotesCustomDrawer';
+import {StyleSheet} from 'react-native';
 
 const NotesStack = createStackNavigator();
 const NotesDrawer = createDrawerNavigator();
@@ -28,10 +30,15 @@ const NotesNavigationStack = (): JSX.Element => {
 const NotesNavigationDrawer = (): JSX.Element => {
   return (
     <NotesDrawer.Navigator
+      // eslint-disable-next-line react/no-unstable-nested-components
+      drawerContent={() => <NotesCustomDrawer />}
       screenOptions={({navigation}) => ({
         // eslint-disable-next-line react/no-unstable-nested-components
         headerLeft: () => (
-          <NotesDrawerProfile onPress={navigation.toggleDrawer} />
+          <NotesDrawerProfile
+            onPress={navigation.toggleDrawer}
+            profilePictureStyle={styles.profilePictureView}
+          />
         ),
       })}>
       <NotesDrawer.Screen
@@ -48,5 +55,13 @@ const NotesNavigationDrawer = (): JSX.Element => {
     </NotesDrawer.Navigator>
   );
 };
+
+const styles = StyleSheet.create({
+  profilePictureView: {
+    width: 27,
+    height: 27,
+    marginLeft: 3,
+  },
+});
 
 export default NotesNavigationDrawer;
