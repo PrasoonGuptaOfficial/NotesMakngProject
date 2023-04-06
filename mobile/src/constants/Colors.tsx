@@ -6,4 +6,7 @@ export const NotesColors = {
   mainLightThemeColor: '#F6FEF6',
   mainDarkThemeColor: '#052E05',
   drawerHeaderThemeColor: '#E8FCE8',
+  dividerLineThemeColor: '#C5C5C5',
+  textDarkThemeColor: '#062D06',
+  drawerItemTextColor: '#094309',
 };
