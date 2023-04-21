@@ -1,8 +1,12 @@
-import {configureStore} from '@reduxjs/toolkit';
+import {combineReducers, configureStore} from '@reduxjs/toolkit';
 import DummyReducer from './DummySlice';
+import AddCategoryReducer from './AddCategorySlice';
 
 export const NotesStore = configureStore({
-  reducer: DummyReducer,
+  reducer: combineReducers({
+    DummyReducer,
+    AddCategoryReducer,
+  }),
 });
 
 export type NotesRootState = ReturnType<typeof NotesStore.getState>;
