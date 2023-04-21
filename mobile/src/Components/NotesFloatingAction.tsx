@@ -1,16 +1,29 @@
-import React from 'react';
-import {Alert, Pressable, StyleSheet, Text} from 'react-native';
+import React, {useState} from 'react';
+import {Modal, Pressable, StyleSheet, Text} from 'react-native';
 import {NotesColors} from '../constants/Colors';
 import {NotesIcons} from '../constants/Icon';
+import NotesAddModal from './NotesAddModal';
 
 const NotesFloatingAction = (): JSX.Element => {
+  const [isAddNotesModalOpen, setAddNotesModalOpen] = useState(false);
+  const onAddNotesHandler = () => {
+    setAddNotesModalOpen(true);
+  };
+  const onAddNotesModalCloseHandler = () => {
+    setAddNotesModalOpen(false);
+  };
   return (
-    <Pressable
-      style={styles.floatingButton}
-      onPress={() => {
-        Alert.alert('Button is pressed');
-      }}>
+    <Pressable style={styles.floatingButton} onPress={onAddNotesHandler}>
       <Text style={styles.floatingIconStyle}>{NotesIcons.plus}</Text>
+      {isAddNotesModalOpen && (
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={isAddNotesModalOpen}
+          onRequestClose={onAddNotesModalCloseHandler}>
+          <NotesAddModal onAddNotesModalClose={onAddNotesModalCloseHandler} />
+        </Modal>
+      )}
     </Pressable>
   );
 };

@@ -9,4 +9,6 @@ export const NotesColors = {
   dividerLineThemeColor: '#C5C5C5',
   textDarkThemeColor: '#062D06',
   drawerItemTextColor: '#094309',
+  modalHeaderTextTheme: '#094409',
+  placeHolderTextInputThemeColor: '#61EA61',
 };
