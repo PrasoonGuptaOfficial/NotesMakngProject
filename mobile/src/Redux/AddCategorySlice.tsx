@@ -32,8 +32,15 @@ export const AddCategorySlice = createSlice({
           )
         : [...state.AddCategoryDrawer, newAddCategory];
     },
+    DeleteSingleCategory: (state, action: PayloadAction<any>) => {
+      const AddCategoryItemText = action.payload;
+      state.AddCategoryDrawer = state.AddCategoryDrawer.filter(
+        item => item.itemText !== AddCategoryItemText,
+      );
+    },
   },
 });
 
-export const {AddSingleCategory} = AddCategorySlice.actions;
+export const {AddSingleCategory, DeleteSingleCategory} =
+  AddCategorySlice.actions;
 export default AddCategorySlice.reducer;
