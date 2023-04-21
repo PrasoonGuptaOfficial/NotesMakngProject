@@ -4,4 +4,6 @@ export const NotesIcons = {
   Gallery: '\u{1F5BC}',
   ViewPhoto: '\u{1F441}',
   Garbage: '\u{1F5D1}',
+  DropDownArrow: '\u2304',
+  DropUpArrow: '\u2303',
 };

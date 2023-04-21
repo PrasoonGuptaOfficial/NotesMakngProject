@@ -10,6 +10,10 @@ const NotesMainScreen = (): JSX.Element => {
   const count = useSelector(
     (state: NotesRootState) => state.DummyReducer.value,
   );
+  const {AddNotes} = useSelector(
+    (state: NotesRootState) => state.AddNotesSlice,
+  );
+  console.log('Prasoon Lokit => ', AddNotes);
   const dispatch = useDispatch();
   return (
     <NotesSafeAreaView>

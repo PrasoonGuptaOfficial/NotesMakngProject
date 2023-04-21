@@ -10,6 +10,7 @@ import {NotesString} from '../constants/NotesString';
 import NotesAddCategoryModal from '../Components/NotesAddCategoryModal';
 import {useSelector} from 'react-redux';
 import {NotesRootState} from '../Redux/NotesStore';
+import NotesSafeAreaView from '../Components/NotesSafeAreaView';
 
 const NotesCustomDrawer = (): JSX.Element => {
   const [isAddCategoryModalOpen, setIsAddCategoryModalOpen] = useState(false);
@@ -27,38 +28,40 @@ const NotesCustomDrawer = (): JSX.Element => {
   };
   return (
     <DrawerContentScrollView>
-      <NotesDrawerProfile profilePictureStyle={styles.profilePictureView} />
-      <NotesText
-        notesText="Prasoon Gupta"
-        notesTextStyle={styles.customDrawerTextStyle}
-      />
-      <NotesDivider />
-      {AddCategoryDrawerItems.map(item => (
-        <NotesDrawerItem
-          key={item.id}
-          drawerItemText={item.itemText}
-          drawerItemPress={() => {
-            onIndividualDrawerItemPressHandler(item.itemText);
-          }}
-          notesDrawerItemImage={item.itemImage}
+      <NotesSafeAreaView>
+        <NotesDrawerProfile profilePictureStyle={styles.profilePictureView} />
+        <NotesText
+          notesText="Prasoon Gupta"
+          notesTextStyle={styles.customDrawerTextStyle}
         />
-      ))}
-      <NotesDrawerItem
-        drawerItemText={NotesString.Add_Category}
-        drawerItemPress={onAddCategoryHandler}
-        notesDrawerItemImage={require('../Assets/Images/NotesAddCategoryIcon.png')}
-      />
-      {isAddCategoryModalOpen && (
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={isAddCategoryModalOpen}
-          onRequestClose={onAddCategoryModalCloseHandler}>
-          <NotesAddCategoryModal
-            onAddCategoryModalClose={onAddCategoryModalCloseHandler}
+        <NotesDivider />
+        {AddCategoryDrawerItems.map(item => (
+          <NotesDrawerItem
+            key={item.id}
+            drawerItemText={item.itemText}
+            drawerItemPress={() => {
+              onIndividualDrawerItemPressHandler(item.itemText);
+            }}
+            notesDrawerItemImage={item.itemImage}
           />
-        </Modal>
-      )}
+        ))}
+        <NotesDrawerItem
+          drawerItemText={NotesString.Add_Category}
+          drawerItemPress={onAddCategoryHandler}
+          notesDrawerItemImage={require('../Assets/Images/NotesAddCategoryIcon.png')}
+        />
+        {isAddCategoryModalOpen && (
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={isAddCategoryModalOpen}
+            onRequestClose={onAddCategoryModalCloseHandler}>
+            <NotesAddCategoryModal
+              onAddCategoryModalClose={onAddCategoryModalCloseHandler}
+            />
+          </Modal>
+        )}
+      </NotesSafeAreaView>
     </DrawerContentScrollView>
   );
 };
