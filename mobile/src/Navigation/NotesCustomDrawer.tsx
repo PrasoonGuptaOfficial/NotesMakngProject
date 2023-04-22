@@ -8,11 +8,13 @@ import {NotesColors} from '../constants/Colors';
 import NotesDrawerItem from '../Components/NotesDrawerItem';
 import {NotesString} from '../constants/NotesString';
 import NotesAddCategoryModal from '../Components/NotesAddCategoryModal';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {NotesRootState} from '../Redux/NotesStore';
 import NotesSafeAreaView from '../Components/NotesSafeAreaView';
+import {SelectedSingleCategory} from '../Redux/AddCategorySlice';
 
-const NotesCustomDrawer = (): JSX.Element => {
+const NotesCustomDrawer = (props: any): JSX.Element => {
+  const dispatch = useDispatch();
   const [isAddCategoryModalOpen, setIsAddCategoryModalOpen] = useState(false);
   const AddCategoryDrawerItems = useSelector(
     (state: NotesRootState) => state.AddCategoryReducer.AddCategoryDrawer,
@@ -24,7 +26,8 @@ const NotesCustomDrawer = (): JSX.Element => {
     setIsAddCategoryModalOpen(false);
   };
   const onIndividualDrawerItemPressHandler = (drawerText: string) => {
-    console.log('Individual Item Id', drawerText);
+    props.navigation.toggleDrawer();
+    dispatch(SelectedSingleCategory(drawerText));
   };
   return (
     <DrawerContentScrollView>
@@ -35,6 +38,13 @@ const NotesCustomDrawer = (): JSX.Element => {
           notesTextStyle={styles.customDrawerTextStyle}
         />
         <NotesDivider />
+        <NotesDrawerItem
+          drawerItemText={NotesString.All_Notes_Category}
+          drawerItemPress={() =>
+            onIndividualDrawerItemPressHandler(NotesString.All_Notes_Category)
+          }
+          notesDrawerItemImage={require('../Assets/Images/NotesHomeCategoryIcon.png')}
+        />
         {AddCategoryDrawerItems.map(item => (
           <NotesDrawerItem
             key={item.id}

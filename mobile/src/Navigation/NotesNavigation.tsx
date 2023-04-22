@@ -7,6 +7,7 @@ import {NotesColors} from '../constants/Colors';
 import {NotesString} from '../constants/NotesString';
 import NotesCustomDrawer from './NotesCustomDrawer';
 import {StyleSheet} from 'react-native';
+import NotesDetailDisplayScreen from '../Screen/NotesDetailDisplayScreen';
 
 const NotesStack = createStackNavigator();
 const NotesDrawer = createDrawerNavigator();
@@ -23,6 +24,11 @@ const NotesNavigationStack = (): JSX.Element => {
         component={NotesMainScreen}
         options={NotesStackOptions}
       />
+      <NotesStack.Screen
+        name="Detail"
+        component={NotesDetailDisplayScreen}
+        options={NotesStackOptions}
+      />
     </NotesStack.Navigator>
   );
 };
@@ -31,7 +37,7 @@ const NotesNavigationDrawer = (): JSX.Element => {
   return (
     <NotesDrawer.Navigator
       // eslint-disable-next-line react/no-unstable-nested-components
-      drawerContent={() => <NotesCustomDrawer />}
+      drawerContent={(props: any) => <NotesCustomDrawer {...props} />}
       screenOptions={({navigation}) => ({
         // eslint-disable-next-line react/no-unstable-nested-components
         headerLeft: () => (

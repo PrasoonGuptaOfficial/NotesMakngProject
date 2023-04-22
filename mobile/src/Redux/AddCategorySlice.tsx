@@ -9,10 +9,12 @@ export interface AddCategoryDrawerItems {
 
 export interface AddCategoryState {
   AddCategoryDrawer: AddCategoryDrawerItems[];
+  SelectSingleCategory: string;
 }
 
 const initialState: AddCategoryState = {
   AddCategoryDrawer: [],
+  SelectSingleCategory: '',
 };
 
 export const AddCategorySlice = createSlice({
@@ -38,9 +40,12 @@ export const AddCategorySlice = createSlice({
         item => item.itemText !== AddCategoryItemText,
       );
     },
+    SelectedSingleCategory: (state, action: PayloadAction<any>) => {
+      state.SelectSingleCategory = action.payload;
+    },
   },
 });
 
-export const {AddSingleCategory, DeleteSingleCategory} =
+export const {AddSingleCategory, DeleteSingleCategory, SelectedSingleCategory} =
   AddCategorySlice.actions;
 export default AddCategorySlice.reducer;

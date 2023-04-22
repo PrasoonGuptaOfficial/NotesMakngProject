@@ -11,4 +11,6 @@ export const NotesColors = {
   drawerItemTextColor: '#094309',
   modalHeaderTextTheme: '#094409',
   placeHolderTextInputThemeColor: '#61EA61',
+  notesDisplayThemeColor: '#A5F3A5',
+  AlertDisplayThemeColor: '#D0342C',
 };
