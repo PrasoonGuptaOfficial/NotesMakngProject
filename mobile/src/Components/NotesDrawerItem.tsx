@@ -14,7 +14,8 @@ const NotesDrawerItem = (props: any): JSX.Element => {
   const deleteAddCategoryDrawer = (drawerItem: string) => {
     dispatch(DeleteSingleCategory(drawerItem));
   };
-  return props.drawerItemText === NotesString.Add_Category ? (
+  return props.drawerItemText === NotesString.Add_Category ||
+    props.drawerItemText === NotesString.All_Notes_Category ? (
     <DrawerItem
       label={props.drawerItemText}
       onPress={props.drawerItemPress}

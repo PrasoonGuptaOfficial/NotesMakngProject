@@ -14,7 +14,7 @@ const NotesFloatingAction = (): JSX.Element => {
   };
   return (
     <Pressable style={styles.floatingButton} onPress={onAddNotesHandler}>
-      <Text style={styles.floatingIconStyle}>{NotesIcons.plus}</Text>
+      <Text style={styles.floatingIconStyle}>{NotesIcons.Plus}</Text>
       {isAddNotesModalOpen && (
         <Modal
           animationType="slide"

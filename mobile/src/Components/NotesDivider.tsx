@@ -2,8 +2,10 @@ import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {NotesColors} from '../constants/Colors';
 
-const NotesDivider = (): JSX.Element => {
-  return <View style={styles.dividerLine} />;
+const NotesDivider = (props: any): JSX.Element => {
+  return (
+    <View style={[styles.dividerLine, props.notesEnhancedDividerLineStyle]} />
+  );
 };
 
 const styles = StyleSheet.create({

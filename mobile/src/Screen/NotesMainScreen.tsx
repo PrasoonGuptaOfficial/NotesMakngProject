@@ -1,29 +1,18 @@
 import React from 'react';
-import {Button, Text} from 'react-native';
 import NotesSafeAreaView from '../Components/NotesSafeAreaView';
 import NotesFloatingAction from '../Components/NotesFloatingAction';
-import {useDispatch, useSelector} from 'react-redux';
-import type {NotesRootState} from '../Redux/NotesStore';
-import {increment, incrementByValue} from '../Redux/DummySlice';
+import NotesDisplayScreen from './NotesDisplayScreen';
+import {useSelector} from 'react-redux';
+import {NotesRootState} from '../Redux/NotesStore';
 
 const NotesMainScreen = (): JSX.Element => {
-  const count = useSelector(
-    (state: NotesRootState) => state.DummyReducer.value,
+  const {AddCategoryDrawer} = useSelector(
+    (state: NotesRootState) => state.AddCategoryReducer,
   );
-  const {AddNotes} = useSelector(
-    (state: NotesRootState) => state.AddNotesSlice,
-  );
-  console.log('Prasoon Lokit => ', AddNotes);
-  const dispatch = useDispatch();
   return (
     <NotesSafeAreaView>
-      <Text>{count}</Text>
-      <Button title="Increment" onPress={() => dispatch(increment())} />
-      <Button
-        title="IncrementByValue"
-        onPress={() => dispatch(incrementByValue(5))}
-      />
-      <NotesFloatingAction />
+      <NotesDisplayScreen />
+      {AddCategoryDrawer.length > 0 && <NotesFloatingAction />}
     </NotesSafeAreaView>
   );
 };

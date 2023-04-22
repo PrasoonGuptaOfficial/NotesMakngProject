@@ -1,9 +1,17 @@
 export const NotesIcons = {
-  plus: '\u002B',
+  Plus: '\u002B',
   Camera: '\u{1F4F7}',
   Gallery: '\u{1F5BC}',
   ViewPhoto: '\u{1F441}',
   Garbage: '\u{1F5D1}',
   DropDownArrow: '\u2304',
   DropUpArrow: '\u2303',
+  Alert: '\u26A0',
+  WhishListUnselected: '\u2661',
+  WhishListSelected: '\u2665',
+  Edit: '\u270F',
+  Return: '\u232B',
+  DateSeparation: '\u{0002F}',
+  ColonSeparation: '\u{0003A}',
+  Notes: '\u{1F4D3}',
 };
