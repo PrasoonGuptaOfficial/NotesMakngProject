@@ -35,8 +35,9 @@ const NotesDisplayCard = (props: any): JSX.Element => {
   const {AddCategoryDrawer} = useSelector(
     (state: NotesRootState) => state.AddCategoryReducer,
   );
-  const [isNotesWhistListSelected, setIsNotesWhishListSelected] =
-    useState(false);
+  const [isNotesWhistListSelected, setIsNotesWhishListSelected] = useState(
+    props.notesWishlistSelected,
+  );
   const notesCardFetchedDate: NotesFetchedDateState = NotesFetchedDate(
     props.notesCardIdDate,
   );
@@ -49,6 +50,7 @@ const NotesDisplayCard = (props: any): JSX.Element => {
       ...props,
     });
   };
+  const {notesBottomTabBarFocussed} = props;
   const onSingleNoteDeleteHandler = (deletedTitle: string) => {
     dispatch(DeleteSingleNote(deletedTitle));
   };
@@ -68,7 +70,20 @@ const NotesDisplayCard = (props: any): JSX.Element => {
     dispatch(DeleteSingleWhishListNote(props.notesCardTitle));
   };
   return (
-    <SafeAreaView style={styles.cardNotesLayout}>
+    <SafeAreaView
+      style={[
+        styles.cardNotesLayout,
+        {
+          height:
+            Platform.OS === 'ios'
+              ? notesBottomTabBarFocussed
+                ? Dimensions.get('window').height / 5.85
+                : Dimensions.get('window').height / 4.55
+              : notesBottomTabBarFocussed
+              ? Dimensions.get('window').height / 6.35
+              : Dimensions.get('window').height / 4.9,
+        },
+      ]}>
       <Pressable onPress={() => onPressNavigationDetailHandler(false)}>
         <View style={styles.cardNotesDateLayout}>
           <NotesText
@@ -93,46 +108,50 @@ const NotesDisplayCard = (props: any): JSX.Element => {
           notesTextStyle={styles.cardNotesTextLayout}
         />
       </Pressable>
-      <NotesDivider
-        notesEnhancedDividerLineStyle={styles.notesCardDividerLine}
-      />
-      <View style={styles.notesCardSymbolsLayout}>
-        {!isAddCategoryDeleted && (
-          <NotesPressable
-            notesPressableOnPress={() => {}}
-            notesPressableText={NotesIcons.Alert}
-            notesPressableTextStyle={[
-              styles.notesCardSymbolTextLayout,
-              styles.notesCardSymbolAlert,
-            ]}
+      {!notesBottomTabBarFocussed && (
+        <>
+          <NotesDivider
+            notesEnhancedDividerLineStyle={styles.notesCardDividerLine}
           />
-        )}
-        {isNotesWhistListSelected ? (
-          <NotesPressable
-            notesPressableOnPress={onNotesWhistListUnSelectedHandler}
-            notesPressableText={NotesIcons.WhishListSelected}
-            notesPressableTextStyle={styles.notesCardSymbolTextLayout}
-          />
-        ) : (
-          <NotesPressable
-            notesPressableOnPress={onNotesWhistListSelectedHandler}
-            notesPressableText={NotesIcons.WhishListUnselected}
-            notesPressableTextStyle={styles.notesCardSymbolTextLayout}
-          />
-        )}
-        <NotesPressable
-          notesPressableOnPress={() => onPressNavigationDetailHandler(true)}
-          notesPressableText={NotesIcons.Edit}
-          notesPressableTextStyle={styles.notesCardSymbolTextLayout}
-        />
-        <NotesPressable
-          notesPressableOnPress={() =>
-            onSingleNoteDeleteHandler(props.notesCardTitle)
-          }
-          notesPressableText={NotesIcons.Garbage}
-          notesPressableTextStyle={styles.notesCardSymbolTextLayout}
-        />
-      </View>
+          <View style={styles.notesCardSymbolsLayout}>
+            {!isAddCategoryDeleted && (
+              <NotesPressable
+                notesPressableOnPress={() => {}}
+                notesPressableText={NotesIcons.Alert}
+                notesPressableTextStyle={[
+                  styles.notesCardSymbolTextLayout,
+                  styles.notesCardSymbolAlert,
+                ]}
+              />
+            )}
+            {isNotesWhistListSelected ? (
+              <NotesPressable
+                notesPressableOnPress={onNotesWhistListUnSelectedHandler}
+                notesPressableText={NotesIcons.WhishListSelected}
+                notesPressableTextStyle={styles.notesCardSymbolTextLayout}
+              />
+            ) : (
+              <NotesPressable
+                notesPressableOnPress={onNotesWhistListSelectedHandler}
+                notesPressableText={NotesIcons.WhishListUnselected}
+                notesPressableTextStyle={styles.notesCardSymbolTextLayout}
+              />
+            )}
+            <NotesPressable
+              notesPressableOnPress={() => onPressNavigationDetailHandler(true)}
+              notesPressableText={NotesIcons.Edit}
+              notesPressableTextStyle={styles.notesCardSymbolTextLayout}
+            />
+            <NotesPressable
+              notesPressableOnPress={() =>
+                onSingleNoteDeleteHandler(props.notesCardTitle)
+              }
+              notesPressableText={NotesIcons.Garbage}
+              notesPressableTextStyle={styles.notesCardSymbolTextLayout}
+            />
+          </View>
+        </>
+      )}
     </SafeAreaView>
   );
 };
@@ -142,10 +161,6 @@ const styles = StyleSheet.create({
     flex: 1,
     minWidth: Dimensions.get('window').width / 2.3,
     maxWidth: Dimensions.get('window').width / 2.3,
-    height:
-      Platform.OS === 'ios'
-        ? Dimensions.get('window').height / 4.55
-        : Dimensions.get('window').height / 4.9,
     padding: 8,
     borderWidth: 0.5,
     borderColor: NotesColors.notesDisplayThemeColor,

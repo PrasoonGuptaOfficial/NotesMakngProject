@@ -13,4 +13,5 @@ export const NotesIcons = {
   Return: '\u232B',
   DateSeparation: '\u{0002F}',
   ColonSeparation: '\u{0003A}',
+  Notes: '\u{1F4D3}',
 };

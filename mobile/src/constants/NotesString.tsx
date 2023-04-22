@@ -1,5 +1,6 @@
 export const NotesString = {
   Notes: 'Notes',
+  Wishlist: 'WishList',
   Add_Category: 'Add Category',
   All_Notes_Category: 'All',
   Add_Notes: 'Add Notes',
