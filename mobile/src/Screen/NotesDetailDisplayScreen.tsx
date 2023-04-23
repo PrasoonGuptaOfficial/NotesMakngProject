@@ -1,6 +1,6 @@
 import {useNavigation} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
-import {SafeAreaView, StyleSheet, View} from 'react-native';
+import {Alert, SafeAreaView, StyleSheet, View} from 'react-native';
 import {NotesColors} from '../constants/Colors';
 import NotesPressable from '../Components/NotesPressable';
 import {NotesIcons} from '../constants/Icon';
@@ -69,13 +69,13 @@ const NotesDetailDisplayScreen = (props: any): JSX.Element => {
           );
           onReturnDisplayScreenHandler();
         } else {
-          throw new Error('Please add the Category');
+          Alert.alert(NotesString.Error_Category_Add_Notes);
         }
       } else {
-        throw new Error('Please provide the Description of Notes!!');
+        Alert.alert(NotesString.Error_Description_Notes);
       }
     } else {
-      throw new Error('Please provide the Title of Notes!!');
+      Alert.alert(NotesString.Error_Title_Notes);
     }
   };
   return (
