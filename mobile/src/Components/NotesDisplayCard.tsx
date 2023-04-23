@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {
   Dimensions,
+  Modal,
   Platform,
   Pressable,
   SafeAreaView,
@@ -22,6 +23,7 @@ import {
   DeleteSingleWhishListNote,
 } from '../Redux/AddNotesWhishListSlice';
 import {NotesString} from '../constants/NotesString';
+import NotesAlertModal from './NotesAlertModal';
 
 export interface NotesFetchedDateState {
   notesCardDay: string;
@@ -38,6 +40,9 @@ const NotesDisplayCard = (props: any): JSX.Element => {
   const [isNotesWhistListSelected, setIsNotesWhishListSelected] = useState(
     props.notesWishlistSelected,
   );
+  const [isDeleteAddNotesModal, setIsDeleteAddNotesModal] = useState(false);
+  const [isDeSelectWishListNotesModal, setIsDeSelectWishListNotesModal] =
+    useState(false);
   const notesCardFetchedDate: NotesFetchedDateState = NotesFetchedDate(
     props.notesCardIdDate,
   );
@@ -125,11 +130,36 @@ const NotesDisplayCard = (props: any): JSX.Element => {
               />
             )}
             {isNotesWhistListSelected ? (
-              <NotesPressable
-                notesPressableOnPress={onNotesWhistListUnSelectedHandler}
-                notesPressableText={NotesIcons.WhishListSelected}
-                notesPressableTextStyle={styles.notesCardSymbolTextLayout}
-              />
+              <>
+                <NotesPressable
+                  notesPressableOnPress={() =>
+                    setIsDeSelectWishListNotesModal(true)
+                  }
+                  notesPressableText={NotesIcons.WhishListSelected}
+                  notesPressableTextStyle={styles.notesCardSymbolTextLayout}
+                />
+                {isDeSelectWishListNotesModal && (
+                  <Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={isDeSelectWishListNotesModal}
+                    onRequestClose={() =>
+                      setIsDeSelectWishListNotesModal(false)
+                    }>
+                    <NotesAlertModal
+                      notesAlertModalText={
+                        NotesString.Alert_Confirm_DeSelect_Wishlist
+                      }
+                      notesAlertModalConfirmButton={
+                        onNotesWhistListUnSelectedHandler
+                      }
+                      notesAlertModalCloseButton={() =>
+                        setIsDeSelectWishListNotesModal(false)
+                      }
+                    />
+                  </Modal>
+                )}
+              </>
             ) : (
               <NotesPressable
                 notesPressableOnPress={onNotesWhistListSelectedHandler}
@@ -142,13 +172,30 @@ const NotesDisplayCard = (props: any): JSX.Element => {
               notesPressableText={NotesIcons.Edit}
               notesPressableTextStyle={styles.notesCardSymbolTextLayout}
             />
-            <NotesPressable
-              notesPressableOnPress={() =>
-                onSingleNoteDeleteHandler(props.notesCardTitle)
-              }
-              notesPressableText={NotesIcons.Garbage}
-              notesPressableTextStyle={styles.notesCardSymbolTextLayout}
-            />
+            <>
+              <NotesPressable
+                notesPressableOnPress={() => setIsDeleteAddNotesModal(true)}
+                notesPressableText={NotesIcons.Garbage}
+                notesPressableTextStyle={styles.notesCardSymbolTextLayout}
+              />
+              {isDeleteAddNotesModal && (
+                <Modal
+                  animationType="slide"
+                  transparent={true}
+                  visible={isDeleteAddNotesModal}
+                  onRequestClose={() => setIsDeleteAddNotesModal(false)}>
+                  <NotesAlertModal
+                    notesAlertModalText={NotesString.Alert_Confirm_Notes}
+                    notesAlertModalConfirmButton={() =>
+                      onSingleNoteDeleteHandler(props.notesCardTitle)
+                    }
+                    notesAlertModalCloseButton={() =>
+                      setIsDeleteAddNotesModal(false)
+                    }
+                  />
+                </Modal>
+              )}
+            </>
           </View>
         </>
       )}

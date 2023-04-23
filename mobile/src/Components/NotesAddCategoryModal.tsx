@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {
+  Alert,
   Dimensions,
   Platform,
   SafeAreaView,
@@ -34,10 +35,10 @@ const NotesAddCategoryModal = (props: any) => {
         );
         props.onAddCategoryModalClose();
       } else {
-        throw new Error('Please provide the category url');
+        Alert.alert(NotesString.Error_Category_Url);
       }
     } else {
-      throw new Error('Please provide the category name');
+      Alert.alert(NotesString.Error_Category_Name);
     }
   };
   return (

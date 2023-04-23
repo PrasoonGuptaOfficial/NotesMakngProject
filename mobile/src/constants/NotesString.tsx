@@ -11,5 +11,16 @@ export const NotesString = {
   Category_Image_Text: 'Category Image',
   Close_Button: 'Close',
   Add_Button: 'Add',
+  Confirm_Button: 'Confirm',
   Navigate_Detail_Page: 'Detail',
+  Error_Category_Name: 'Please provide the category name',
+  Error_Category_Url: 'Please provide the category url',
+  Error_Category_Add_Notes: 'Please add the Category',
+  Error_Description_Notes: 'Please provide the Description of Notes!!',
+  Error_Title_Notes: 'Please provide the Title of Notes!!',
+  Alert_Confirm_Category: 'Are you confirm to delete the Category?',
+  Alert_Confirm_Notes: 'Are you confirm to delete the notes?',
+  Alert_Confirm_Image_Category:
+    'Are you confirm to delete the Image of Category?',
+  Alert_Confirm_DeSelect_Wishlist: 'Are you confirm to De-Select the Wishlist?',
 };

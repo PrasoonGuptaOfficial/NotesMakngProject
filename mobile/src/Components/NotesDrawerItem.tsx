@@ -1,15 +1,18 @@
 import {DrawerItem} from '@react-navigation/drawer';
-import React from 'react';
+import React, {useState} from 'react';
 import NotesImages from './NotesImages';
-import {StyleSheet} from 'react-native';
+import {Modal, StyleSheet} from 'react-native';
 import {NotesColors} from '../constants/Colors';
 import {NotesString} from '../constants/NotesString';
 import NotesPressable from './NotesPressable';
 import {NotesIcons} from '../constants/Icon';
 import {useDispatch} from 'react-redux';
 import {DeleteSingleCategory} from '../Redux/AddCategorySlice';
+import NotesAlertModal from './NotesAlertModal';
 
 const NotesDrawerItem = (props: any): JSX.Element => {
+  const [isDeleteAddCategoryDrawer, setIsDeleteAddCategoryDrawer] =
+    useState(false);
   const dispatch = useDispatch();
   const deleteAddCategoryDrawer = (drawerItem: string) => {
     dispatch(DeleteSingleCategory(drawerItem));
@@ -31,28 +34,47 @@ const NotesDrawerItem = (props: any): JSX.Element => {
       labelStyle={styles.drawerTextStyle}
     />
   ) : (
-    <DrawerItem
-      label={props.drawerItemText}
-      onPress={props.drawerItemPress}
-      // eslint-disable-next-line react/no-unstable-nested-components
-      icon={() => {
-        return (
-          <React.Fragment>
-            <NotesImages
-              notesImageSource={props.notesDrawerItemImage}
-              notesImageStyle={styles.imageStyle}
-            />
-            <NotesPressable
-              notesPressableText={NotesIcons.Garbage}
-              notesPressableOnPress={() => {
-                deleteAddCategoryDrawer(props.drawerItemText);
-              }}
-            />
-          </React.Fragment>
-        );
-      }}
-      labelStyle={styles.drawerTextStyle}
-    />
+    <>
+      <DrawerItem
+        label={props.drawerItemText}
+        onPress={props.drawerItemPress}
+        // eslint-disable-next-line react/no-unstable-nested-components
+        icon={() => {
+          return (
+            <React.Fragment>
+              <NotesImages
+                notesImageSource={props.notesDrawerItemImage}
+                notesImageStyle={styles.imageStyle}
+              />
+              <NotesPressable
+                notesPressableText={NotesIcons.Garbage}
+                notesPressableOnPress={() => {
+                  setIsDeleteAddCategoryDrawer(true);
+                }}
+              />
+            </React.Fragment>
+          );
+        }}
+        labelStyle={styles.drawerTextStyle}
+      />
+      {isDeleteAddCategoryDrawer && (
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={isDeleteAddCategoryDrawer}
+          onRequestClose={() => setIsDeleteAddCategoryDrawer(false)}>
+          <NotesAlertModal
+            notesAlertModalText={NotesString.Alert_Confirm_Category}
+            notesAlertModalCloseButton={() =>
+              setIsDeleteAddCategoryDrawer(false)
+            }
+            notesAlertModalConfirmButton={() =>
+              deleteAddCategoryDrawer(props.drawerItemText)
+            }
+          />
+        </Modal>
+      )}
+    </>
   );
 };
 

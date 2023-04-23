@@ -1,5 +1,5 @@
 import React, {useCallback, useState} from 'react';
-import {Alert, Dimensions, StyleSheet, View} from 'react-native';
+import {Alert, Dimensions, Modal, StyleSheet, View} from 'react-native';
 import {NotesIcons} from '../constants/Icon';
 import {NotesString} from '../constants/NotesString';
 import NotesText from './NotesText';
@@ -8,6 +8,7 @@ import NotesPressable from './NotesPressable';
 import * as ImagePicker from 'react-native-image-picker';
 import {NotesImagePickerOptions} from '../constants/NotesOptions';
 import NotesAddCategoryImagePreviewModal from './NotesAddCategoryImagePreviewModal';
+import NotesAlertModal from './NotesAlertModal';
 
 const NotesAddCategoryImage = (props: any): JSX.Element => {
   const [onErrorDisplay, setOnErrorDisplay] = useState(false);
@@ -16,6 +17,8 @@ const NotesAddCategoryImage = (props: any): JSX.Element => {
   const [onAddCategoryImagePreviewFlag, setOnAddCategoryImagePreviewFlag] =
     useState(false);
   const [onAddCategoryImageUri, setOnAddCategoryImageUri] = useState('');
+  const [isDeleteAddCategoryImageModal, setIsDeleteAddCategoryImageModal] =
+    useState(false);
   const onCameraClickHandler = useCallback(() => {
     ImagePicker.launchCamera(NotesImagePickerOptions, response => {
       if (response?.errorCode) {
@@ -140,10 +143,33 @@ const NotesAddCategoryImage = (props: any): JSX.Element => {
               notesPressableText={NotesIcons.ViewPhoto}
               notesPressableOnPress={onViewPhotoClickHandler}
             />
-            <NotesPressable
-              notesPressableText={NotesIcons.Garbage}
-              notesPressableOnPress={onDeleteClickHandler}
-            />
+            <>
+              <NotesPressable
+                notesPressableText={NotesIcons.Garbage}
+                notesPressableOnPress={() =>
+                  setIsDeleteAddCategoryImageModal(true)
+                }
+              />
+              {isDeleteAddCategoryImageModal && (
+                <Modal
+                  animationType="slide"
+                  transparent={true}
+                  visible={isDeleteAddCategoryImageModal}
+                  onRequestClose={() =>
+                    setIsDeleteAddCategoryImageModal(false)
+                  }>
+                  <NotesAlertModal
+                    notesAlertModalText={
+                      NotesString.Alert_Confirm_Image_Category
+                    }
+                    notesAlertModalConfirmButton={onDeleteClickHandler}
+                    notesAlertModalCloseButton={() =>
+                      setIsDeleteAddCategoryImageModal(false)
+                    }
+                  />
+                </Modal>
+              )}
+            </>
           </>
         )}
         {onAddCategoryImagePreviewFlag && (

@@ -5,6 +5,7 @@ import {
   View,
   Dimensions,
   Platform,
+  Alert,
 } from 'react-native';
 import NotesText from './NotesText';
 import {NotesString} from '../constants/NotesString';
@@ -34,24 +35,24 @@ const NotesAddModal = (props: any): JSX.Element => {
   const onAddNotesButtonHandler = () => {
     if (onAddNotesTitle) {
       if (onAddNotesDescription) {
-        if (dropDownData.length > 0) {
+        if (dropDownData.length > 0 && selectedDropdown?.value) {
           dispatch(
             AddSingleNote({
               id: Date.now(),
               notesTitle: onAddNotesTitle,
               notesDescription: onAddNotesDescription,
-              notesSelectedCategory: selectedDropdown.value,
+              notesSelectedCategory: selectedDropdown?.value,
             }),
           );
           props.onAddNotesModalClose();
         } else {
-          throw new Error('Please add the Category');
+          Alert.alert(NotesString.Error_Category_Add_Notes);
         }
       } else {
-        throw new Error('Please provide the Description of Notes!!');
+        Alert.alert(NotesString.Error_Description_Notes);
       }
     } else {
-      throw new Error('Please provide the Title of Notes!!');
+      Alert.alert(NotesString.Error_Title_Notes);
     }
   };
   return (
